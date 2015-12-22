@@ -1,0 +1,6 @@
+#!/usr/bin/env php
+
+# pega  a branch atual
+#current_branch="$(git rev-parse --abbrev-ref HEAD)"
+print_r($argv);
+exit(1);
