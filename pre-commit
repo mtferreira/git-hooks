@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# Hook para checar sintaxe PHP
+
+# Substituir IFS para que os espaços não contem como delimitadores
+old_ifs=$IFS
+IFS=$'\n'
+
+php_files=$(git status --short | grep -E '^(A|M)' | awk '{ print $2 }' |grep -E '\.php$')
+
+count=0
+for file in $php_files; do
+	php_out=$(php -l "$file" 2>&1)
+
+	if ! [ $? -eq 0 ]; then
+		echo "Erro de sitaxe no arquivo ${file}:"
+		echo "$php_out" | grep -E '^Erro de análise'
+		echo 
+		count=$count+1
+	fi
+done
+if ! [ $count -gt 0 ];then
+	exit 1
+fi
