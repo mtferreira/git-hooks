@@ -1,7 +1,17 @@
 #!/usr/bin/env php
+
 <?php
-# pega  a branch atual
-#current_branch="$(git rev-parse --abbrev-ref HEAD)"
-print_r($argv);
-exit(1);
+	
+	$menssage       = file_get_contents($argv[count($argv)-1]);
+	$current_branch = shell_exec('git rev-parse --abbrev-ref HEAD');
+       
+	$a = strpos($menssage, $current_branch.":");
+	echo $a;
+	die('aa');
+	if ((strpos($menssage, $current_branch.":"))) {
+                echo "Menssagem de commit inválida: \n Não contém a branch atual ($current_branch)\n";
+                echo "A mensagem deve estar no formato: '$current_branch: .....'";
+                exit(1);
+        }
 ?>
+
