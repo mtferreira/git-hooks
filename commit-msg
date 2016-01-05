@@ -2,15 +2,15 @@
 
 <?php
 	
-	$menssage       = file_get_contents($argv[count($argv)-1]);
+	$message       = file_get_contents($argv[count($argv)-1]);
 	$current_branch = shell_exec('git rev-parse --abbrev-ref HEAD');
        
-	$a = strpos($menssage, $current_branch.":");
-	echo $a;
-	die('aa');
-	if ((strpos($menssage, $current_branch.":"))) {
-                echo "Menssagem de commit inválida: \n Não contém a branch atual ($current_branch)\n";
-                echo "A mensagem deve estar no formato: '$current_branch: .....'";
+	$valid = substr_compare($message, $current_branch.":",0, strlen($current_branch)-1);
+
+	if ($valid !== 0) {
+                echo "Mensagem de commit inválida:".PHP_EOL;
+		echo "A mensagem deve conter no inicio o nome da 'branch' atual".PHP_EOL;
+		echo "ex.: '$current_branch message...'".PHP_EOL;
                 exit(1);
         }
 ?>
